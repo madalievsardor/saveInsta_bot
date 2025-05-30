@@ -6,7 +6,7 @@ const fs = require('fs');
 const https = require('https');
 const app = express();
 
-const token = process.env.TOKEN;
+const token = "7926900328:AAExgUxj57AzFpVDFJvuWrX_Ob8D3yGnuo4";
 const isProduction = !!process.env.RENDER_EXTERNAL_URL;
 let bot;
 
