@@ -6,7 +6,7 @@ const fs = require('fs');
 const https = require('https');
 
 const app = express();
-const token = process.env.TOKEN;
+const token = process.env.TOKEN || "7926900328:AAExgUxj57AzFpVDFJvuWrX_Ob8D3yGnuo4";
 const bot = new TelegramBot(token, { webHook: { port: process.env.PORT || 3000 } });
 
 const URL = process.env.RENDER_EXTERNAL_URL; // Render URL: masalan, https://your-app-name.onrender.com
