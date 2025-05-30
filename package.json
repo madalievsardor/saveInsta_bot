@@ -19,6 +19,7 @@
     "node-telegram-bot-api": "^0.66.0",
     "nodemon": "^3.1.10",
     "request": "^2.88.2",
-    "telegraf": "3.39"
+    "telegraf": "3.39",
+    "webhook": "^0.0.2"
   }
 }
