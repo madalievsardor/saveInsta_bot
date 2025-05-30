@@ -1,0 +1,28 @@
+# Node.js modullari
+node_modules/
+
+# Maxfiy ma’lumotlar
+.env
+
+# Yuklangan videolar (agar vaqtincha saqlansa)
+*.mp4
+
+# Log fayllar
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS’ga xos fayllar
+.DS_Store
+Thumbs.db
+
+# Editor va IDE fayllari
+.vscode/
+.idea/
+
+# Outputlar
+dist/
+build/
+
+# Render loglari (agar bo‘lsa)
+logs/
