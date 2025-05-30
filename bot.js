@@ -18,7 +18,7 @@ if (!token) {
 if (isProduction) {
   const URL = process.env.RENDER_EXTERNAL_URL;
 
-  bot = new TelegramBot(token, { webHook: { port: process.env.PORT } });
+  bot = new TelegramBot(token, { webHook: { port: "https://saveinsta-bot.onrender.com" } });
   bot.setWebHook(`${URL}/bot${token}`);
 
   app.use(express.json());
@@ -96,7 +96,7 @@ app.get('/', (req, res) => {
 
 // Faqat webhookda port tinglanadi
 if (isProduction) {
-  app.listen(process.env.PORT, () => {
-    console.log(`🚀 Server ${process.env.PORT} portda ishga tushdi`);
+  app.listen("https://saveinsta-bot.onrender.com", () => {
+    console.log(`🚀 Server ${`https://saveinsta-bot.onrender.com`} portda ishga tushdi`);
   });
 }
