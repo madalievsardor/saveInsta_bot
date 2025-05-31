@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Webhook sozlamasi
-const webhookUrl = process.env.WEBHOOK_URL || `https://your-bot-name.onrender.com/bot${token}`;
+const webhookUrl = process.env.WEBHOOK_URL;
 bot.setWebHook(webhookUrl).then(() => {
   console.log(`Webhook o'rnatildi: ${webhookUrl}`);
 }).catch(err => {
@@ -77,7 +77,7 @@ bot.on('message', async (msg) => {
       await downloadVideo(videoUrl, outputPath);
 
       await bot.sendVideo(chatId, fs.createReadStream(outputPath), {
-        caption: '📹 *Instagram videosi*',
+        caption: '📹 *Video yuklandi by @savedInstaa_bot*',
         contentType: 'video/mp4',
         parse_mode: 'Markdown'
       });
@@ -91,6 +91,11 @@ bot.on('message', async (msg) => {
     console.error('Umumiy xato:', error.message);
     await bot.sendMessage(chatId, `🚨 *Xatolik yuz berdi*\n\n**Xato:** ${error.message}\n\nIltimos, ssilkani tekshirib qayta urinib ko‘ring!`, { parse_mode: 'Markdown' });
   }
+});
+
+// Health check endpoint
+app.get('/healthz', (req, res) => {
+  res.sendStatus(200);
 });
 
 // Serverni ishga tushirish
