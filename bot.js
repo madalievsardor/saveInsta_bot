@@ -18,7 +18,7 @@ const webhookUrl = process.env.WEBHOOK_URL || `https://your-bot-name.onrender.co
 bot.setWebHook(webhookUrl).then(() => {
   console.log(`Webhook o'rnatildi: ${webhookUrl}`);
 }).catch(err => {
-  console.error("Webhook o'rnatishda xato:", err.message);
+  console.error("Webhook o'rnatishda xato: ", err.message);
 });
 
 // Video yuklash funksiyasi
