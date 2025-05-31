@@ -1,13 +1,27 @@
-require('dotenv').config(); // .env ni chaqirish
-
-const { igdl } = require('btch-downloader');
+require('dotenv').config();
+const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
+const { igdl } = require('btch-downloader');
 const https = require('https');
 const fs = require('fs');
 
+const app = express();
 const token = process.env.TOKEN;
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
+const port = process.env.PORT || 3000;
 
+// Express middleware
+app.use(express.json());
+
+// Webhook sozlamasi
+const webhookUrl = process.env.WEBHOOK_URL || `https://your-bot-name.onrender.com/bot${token}`;
+bot.setWebHook(webhookUrl).then(() => {
+  console.log(`Webhook o'rnatildi: ${webhookUrl}`);
+}).catch(err => {
+  console.error("Webhook o'rnatishda xato:", err.message);
+});
+
+// Video yuklash funksiyasi
 async function downloadVideo(videoUrl, outputPath) {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(outputPath);
@@ -24,6 +38,13 @@ async function downloadVideo(videoUrl, outputPath) {
   });
 }
 
+// Webhook routi
+app.post(`/bot${token}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+// Xabarlar bilan ishlash
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const url = msg.text;
@@ -72,8 +93,12 @@ bot.on('message', async (msg) => {
   }
 });
 
-bot.on('polling_error', (error) => {
-  console.log('Polling xatosi:', error.code);
+// Serverni ishga tushirish
+app.listen(port, () => {
+  console.log(`🤖 Bot ${port}-portda ishga tushdi! Webhook URL: ${webhookUrl}`);
 });
 
-console.log('🤖 Bot ishga tushdi!');
+// Webhook xatolarini log qilish
+bot.on('webhook_error', (error) => {
+  console.log('Webhook xatosi:', error.message);
+});
